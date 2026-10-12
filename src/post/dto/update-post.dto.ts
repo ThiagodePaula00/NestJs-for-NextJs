@@ -1,3 +1,1 @@
-import { CreatePostDto } from "./create-post.dto.js";
-
-export class UpdatePostDto extends PartialType(CreatePostDto) {}
+export class UpdatePostDto {}
