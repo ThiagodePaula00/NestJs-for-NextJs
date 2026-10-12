@@ -1,0 +1,7 @@
+npx nest g mo user
+
+npx nest g s user --no-spec
+
+npx nest g co user --no-spec
+
+npx nest g cl user/entities/user.entity --no-spec --flat
