@@ -14,3 +14,11 @@ npx nest g cl user/entities/user.entity --no-spec --flat
 npx nest g res post
 
 ```
+
+---
+```
+npm i class-validator class-transformer
+
+```
+
+---
