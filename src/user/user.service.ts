@@ -37,7 +37,7 @@ export class UserService {
       }),
     );
 
-    return this.toResponse(user);
+    return user;
   }
 
   findByEmail(email: string) {
@@ -75,21 +75,10 @@ export class UserService {
       user.forceLogout = true;
     }
 
-    return this.toResponse(await this.save(user));
+    return this.save(user);
   }
 
   save(user: User) {
     return this.userRepository.save(user);
-  }
-
-  private toResponse(user: User) {
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      forceLogout: user.forceLogout,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
   }
 }
