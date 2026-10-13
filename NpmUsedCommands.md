@@ -32,3 +32,8 @@ npm i @nestjs/typeorm typeorm better-sqlite3
 ```
 
 ---
+```
+npm install @nestjs/jwt
+```
+
+---
