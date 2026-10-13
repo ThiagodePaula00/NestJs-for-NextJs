@@ -1,14 +1,13 @@
 @baseUrl = http://localhost:3000
 @jwtToken = {{authLogin.response.body.accessToken}}
 
-GET {{baseUrl}}
-###
+### Auth login
 # @name authLogin
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "user1@email.com",
+  "email": "luiz@email.com",
   "password": "123456"
 }
 
@@ -23,7 +22,18 @@ POST {{baseUrl}}/user
 Content-Type: application/json
 
 {
-  "name": "Usuário de teste",
-  "email": "user1@email.com",
+  "name": "Luiz",
+  "email": "luiz@email.com",
   "password": "123456"
+}
+
+### Update user
+# @name updateUser
+PATCH {{baseUrl}}/user/me
+Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
+
+{
+  "name": "Luiz",
+  "email": "luiz@email.com"
 }
