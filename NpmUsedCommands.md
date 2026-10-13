@@ -22,3 +22,15 @@ npm i class-validator class-transformer
 ```
 
 ---
+
+```
+npm i @nestjs/config
+```
+
+---
+
+```
+npm i @nestjs/config
+```
+
+---

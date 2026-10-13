@@ -5,11 +5,19 @@ import { AppService } from './app.service.js';
 import { AuthModule } from './auth/auth.module.js';
 import { PostModule } from './post/post.module.js';
 import { UserModule } from './user/users.module.js';
+import { ConfigModule } from '@nestjs/config';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
 @Module({
-  imports: [AuthModule, UserModule, PostModule],
+  imports: [
+    AuthModule,
+    UserModule,
+    PostModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
