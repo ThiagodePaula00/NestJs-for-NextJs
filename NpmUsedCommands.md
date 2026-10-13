@@ -37,3 +37,8 @@ npm install @nestjs/jwt
 ```
 
 ---
+```
+npm install @nestjs/passport passport passport-jwt && npm install --save-dev @types/passport-jwt
+```
+
+---

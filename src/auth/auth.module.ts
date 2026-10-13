@@ -1,15 +1,18 @@
 import { InternalServerErrorException, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
 import { CommonModule } from '../common/common.module.js';
 import { UserModule } from '../user/user.module.js';
+import { JwtStrategy } from './jwt.strategy.js';
 
 @Module({
   imports: [
     UserModule,
     CommonModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
@@ -31,6 +34,6 @@ import { UserModule } from '../user/user.module.js';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}
