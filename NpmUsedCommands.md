@@ -12,13 +12,11 @@ npx nest g cl user/entities/user.entity --no-spec --flat
 ---
 ```
 npx nest g res post
-
 ```
 
 ---
 ```
 npm i class-validator class-transformer
-
 ```
 
 ---
@@ -30,7 +28,7 @@ npm i @nestjs/config
 ---
 
 ```
-npm i @nestjs/config
+npm i @nestjs/typeorm typeorm better-sqlite3
 ```
 
 ---
