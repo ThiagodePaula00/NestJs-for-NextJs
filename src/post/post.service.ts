@@ -38,6 +38,16 @@ export class PostService {
     });
   }
 
+  async findAll(postData: Partial<Post>) {
+    return this.postRepository.find({
+      where: postData,
+      order: {
+        createdAt: 'DESC',
+      },
+      relations: { author: true },
+    });
+  }
+
   async findOneOwnedOrFail(postData: Partial<Post>, author: User) {
     const post = await this.findOneOwned(postData, author);
 
@@ -107,5 +117,14 @@ export class PostService {
     post.published = dto.published ?? post.published;
 
     return this.postRepository.save(post);
+  }
+
+  async remove(postData: Partial<Post>, author: User) {
+    const post = await this.findOneOwnedOrFail(postData, author);
+    await this.postRepository.delete({
+      ...postData,
+      author: { id: author.id },
+    });
+    return post;
   }
 }
