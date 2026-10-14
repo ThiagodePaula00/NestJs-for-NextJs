@@ -1,7 +1,5 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
-import { AppController } from './app.controller.js';
-import { AppService } from './app.service.js';
 import { AuthModule } from './auth/auth.module.js';
 import { PostModule } from './post/post.module.js';
 import { UserModule } from './user/user.module.js';
@@ -10,14 +8,33 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
+const configModule = ConfigModule.forRoot({
+  isGlobal: true,
+});
+const observeAppKey = process.env.OBSERVE_APP_KEY;
+const observeAppSecret = process.env.OBSERVE_APP_SECRET;
+const observeModule =
+  observeAppKey && observeAppSecret
+    ? ObserveModule.forRoot({
+        appKey: observeAppKey,
+        appSecret: observeAppSecret,
+        serviceId: process.env.OBSERVE_SERVICE_ID || 'nest-js-for-next-js',
+      })
+    : undefined;
+
+if (!observeModule) {
+  new Logger('AppModule').log(
+    'Observability disabled: OBSERVE_APP_KEY and OBSERVE_APP_SECRET are not both configured',
+  );
+}
+
 @Module({
   imports: [
+    ...(observeModule ? [observeModule] : []),
     AuthModule,
     UserModule,
     PostModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
+    configModule,
     TypeOrmModule.forRootAsync({
       useFactory: () => {
         if (process.env.DB_TYPE === 'better-sqlite3') {
@@ -42,7 +59,5 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       },
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
