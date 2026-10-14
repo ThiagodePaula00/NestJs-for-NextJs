@@ -53,3 +53,15 @@ npm install --save-dev @types/multer@latest
 ```
 
 ---
+
+```
+npm install helmet@latest
+```
+
+---
+
+```
+npm install @nestjs/throttler@latest
+```
+
+---
