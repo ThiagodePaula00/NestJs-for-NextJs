@@ -1,8 +1,8 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
-  Param,
   Patch,
   Post,
   Req,
@@ -21,9 +21,10 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return `olá do controller do user #${id}`;
+  @Get('me')
+  async findOne(@Req() req: AuthenticatedRequest) {
+    const user = await this.userService.findOneByOrFail({ id: req.user.id });
+    return new UserResponseDto(user);
   }
 
   @Post()
@@ -46,6 +47,14 @@ export class UserController {
     @Body() dto: UpdatePasswordDto,
   ) {
     const user = await this.userService.updatePassword(req.user.id, dto);
+    return new UserResponseDto(user);
+  }
+
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('me')
+  async remove(@Req() req: AuthenticatedRequest) {
+    const user = await this.userService.remove(req.user.id);
     return new UserResponseDto(user);
   }
 
