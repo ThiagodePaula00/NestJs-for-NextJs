@@ -5,6 +5,7 @@ import { PostModule } from './post/post.module.js';
 import { UserModule } from './user/user.module.js';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UploadModule } from './upload/upload.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -34,6 +35,7 @@ if (!observeModule) {
     AuthModule,
     UserModule,
     PostModule,
+    UploadModule,
     configModule,
     TypeOrmModule.forRootAsync({
       useFactory: () => {
