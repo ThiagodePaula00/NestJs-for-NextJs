@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity.js';
 import { createSlugFromText } from '../common/utils/create-slug-from-text.js';
 import { CreatePostDto } from './dto/create-post.dto.js';
+import { UpdatePostDto } from './dto/update-post.dto.js';
 import { Post } from './entities/post.entity.js';
 
 @Injectable()
@@ -90,5 +91,21 @@ export class PostService {
 
       throw new BadRequestException('Erro ao criar o post');
     }
+  }
+
+  async update(postData: Partial<Post>, dto: UpdatePostDto, author: User) {
+    if (Object.keys(dto).length === 0) {
+      throw new BadRequestException('Dados não enviados');
+    }
+
+    const post = await this.findOneOwnedOrFail(postData, author);
+
+    post.title = dto.title ?? post.title;
+    post.content = dto.content ?? post.content;
+    post.excerpt = dto.excerpt ?? post.excerpt;
+    post.coverImageUrl = dto.coverImageUrl ?? post.coverImageUrl;
+    post.published = dto.published ?? post.published;
+
+    return this.postRepository.save(post);
   }
 }
