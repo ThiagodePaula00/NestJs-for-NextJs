@@ -42,3 +42,7 @@ npm install @nestjs/passport passport passport-jwt && npm install --save-dev @ty
 ```
 
 ---
+
+npm install @nestjs/mapped-types
+
+---
